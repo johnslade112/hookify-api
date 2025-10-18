@@ -12,9 +12,22 @@ from generation import generate_content
 from security import verify_api_key
 from utils import gen_code
 
-APP_URL = os.getenv("APP_URL", "http://localhost:8000")
+APP_URL = os.getenv("APP_URL", "https://hookify-api.onrender.com")
 
 app = FastAPI(title="Hookify API", version="0.1.0")
+from fastapi.middleware.cors import CORSMiddleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://johnslade112.github.io",               # domínio do GitHub Pages
+        "https://johnslade112.github.io/hookify-panel", # página do painel
+        "*"                                             # na validação, deixe '*'; depois você pode remover
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 Base.metadata.create_all(bind=engine)
 
 @app.get("/templates", dependencies=[Depends(verify_api_key)])
