@@ -23,7 +23,6 @@ app.add_middleware(
         "https://johnslade112.github.io/hookify-panel", # página do painel
         "*"                                             # na validação, deixe '*'; depois você pode remover
     ],
-    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
