@@ -1,0 +1,61 @@
+graph TB
+    subgraph "Cliente"
+        A[Aplicação Web/Mobile]
+        B[Script/Automação]
+    end
+    
+    subgraph "Hookify API v2.0"
+        C[FastAPI App]
+        D[Autenticação JWT/API Key]
+        E[Sistema de Quotas]
+        F[Endpoints v2]
+        
+        subgraph "Geração de Conteúdo"
+            G[Hooks Generator]
+            H[Captions Generator]
+            I[Hashtags Generator]
+            J[Emotion Analyzer]
+        end
+        
+        K[Banco de Dados SQLite]
+    end
+    
+    subgraph "Serviços Externos"
+        L[OpenAI API<br/>gpt-4.1-mini]
+        M[Gemini API<br/>gemini-2.5-flash]
+    end
+    
+    subgraph "Monetização"
+        N[Stripe Checkout]
+        O[Webhooks]
+        P[Portal do Cliente]
+    end
+    
+    A -->|HTTP/JSON| C
+    B -->|HTTP/JSON| C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    F --> H
+    F --> I
+    F --> J
+    
+    G -->|Prompt| L
+    H -->|Prompt| L
+    I -->|Prompt| L
+    J -->|Prompt| M
+    
+    C --> K
+    K -->|Users, Subscriptions,<br/>Generations| C
+    
+    A -->|Upgrade Plano| N
+    N -->|Eventos| O
+    O -->|Atualiza| K
+    A -->|Gerenciar Pagamento| P
+    
+    style C fill:#4CAF50
+    style L fill:#FF9800
+    style M fill:#2196F3
+    style K fill:#9C27B0
+    style N fill:#F44336
